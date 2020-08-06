@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9b379c18-94b9-4329-b2e8-538bb0852f32" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="pickrandomFlow1" doc:id="d6d3afe1-8662-499d-b846-876ac433bd4e" >
+		<http:listener doc:name="Listener" doc:id="92d3c1b1-11f5-4513-b9c9-7e00385d8cb3" config-ref="HTTP_Listener_config" path="/home"/>
+		<parse-template doc:name="home" doc:id="a18a7686-7eb8-4e16-910e-f4f6fac59a59" location="home.html" />
+	</flow>
+	<flow name="pickrandomFlow" doc:id="f6190fd8-95fe-4b8a-b190-e9a19d92c4a2" >
+		<http:listener doc:name="Listener" doc:id="d4bdc95b-ca5e-441f-9ebe-61737c4dee15" config-ref="HTTP_Listener_config" path="/test"/>
+		<ee:transform doc:name="Transform Message" doc:id="51a2e39a-12d0-4802-aeab-1b30ea358bea" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[output application/json --- 
+payload.names splitBy ","]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="f5f8f0bf-9b8e-4846-87ec-efd70210014c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[output application/json
+---
+ 
+               
+               payload map {
+               	label : $,
+               	value : 1,
+               	question : $
+               }]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<parse-template doc:name="Parse Template" doc:id="843007b4-05f4-4359-9020-b7a18d7c6adc" location="roundwheel.html"/>
+	</flow>
+</mule>
