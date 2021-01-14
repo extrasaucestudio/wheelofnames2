@@ -10,6 +10,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:listener-config>
 	<flow name="pickrandomFlow1" doc:id="d6d3afe1-8662-499d-b846-876ac433bd4e" >
 		<http:listener doc:name="Listener" doc:id="92d3c1b1-11f5-4513-b9c9-7e00385d8cb3" config-ref="HTTP_Listener_config" path="/home"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9f8570f9-ff44-4175-9cce-9d0878bc359c" message="Before Parse template"/>
 		<parse-template doc:name="home" doc:id="a18a7686-7eb8-4e16-910e-f4f6fac59a59" location="home.html" />
 	</flow>
 	<flow name="pickrandomFlow" doc:id="f6190fd8-95fe-4b8a-b190-e9a19d92c4a2" >
